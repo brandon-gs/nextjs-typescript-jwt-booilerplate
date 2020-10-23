@@ -2,21 +2,14 @@
   "extends": "./frontend/tsconfig.json",
   "compilerOptions": {
     "noEmit": false,
-    "outDir": "./frontend/.next/production-server/",
+    "outDir": "dist",
     "module": "commonjs",
     "esModuleInterop": true,
     "target": "es6",
     "noImplicitAny": true,
     "moduleResolution": "node",
     "sourceMap": true,
-    "baseUrl": "backend",
-    "paths": {
-      "*": ["node_modules/*"],
-      "backend/*": ["./*"]
-    }
+    "baseUrl": "backend"
   },
-  "include": [
-    "backend/**/*",
-    "global.d.ts"
-  ]
+  "include": ["backend/**/*", "global.d.ts"]
 }
