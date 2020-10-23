@@ -1,41 +1,77 @@
-# TypeScript Next.js example
+# TypeScript Next.js JWT Authentication
 
-This is a really simple project that shows the usage of Next.js with TypeScript.
+This project is a demonstration of authentication of an application in Next.js using JWT
 
-## Deploy your own
+## Usage:
 
-Deploy the example using [Vercel](https://vercel.com):
+### Installation:
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/vercel/next.js/tree/canary/examples/with-typescript)
-
-## How to use it?
-
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init) or [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/) to bootstrap the example:
+Make sure you have Node and NPM installed.
 
 ```bash
-npx create-next-app --example with-typescript with-typescript-app
-# or
-yarn create next-app --example with-typescript with-typescript-app
+git clone https://github.com/brandon-gs/nextjs-typescript-jwt-authentication
+cd nextjs-jwt-authentication
+npm install
 ```
 
-Deploy it to the cloud with [Vercel](https://vercel.com/import?filter=next.js&utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
+### Create an .env file in root dir:
 
-## Notes
+This file is necessary to run the application, the file should be like the following:
 
-This example shows how to integrate the TypeScript type system into Next.js. Since TypeScript is supported out of the box with Next.js, all we have to do is to install TypeScript.
-
-```
-npm install --save-dev typescript
-```
-
-To enable TypeScript's features, we install the type declarations for React and Node.
-
-```
-npm install --save-dev @types/react @types/react-dom @types/node
+```.env
+MONGO_DATABASE=nextlogin
+MONGO_USER=admin
+MONGO_PASSWORD=admin
+MONGO_HOST=localhost
+JWT_SECRET=MY_JWT_SECRET_I_MUST_REPLACE_THIS_IN_PRODUCTION
+PORT=3000
 ```
 
-When we run `next dev` the next time, Next.js will start looking for any `.ts` or `.tsx` files in our project and builds it. It even automatically creates a `tsconfig.json` file for our project with the recommended settings.
+You must replace JWT_SECRET variable in production for added security
 
-Next.js has built-in TypeScript declarations, so we'll get autocompletion for Next.js' modules straight away.
+### Starting the app:
 
-A `type-check` script is also added to `package.json`, which runs TypeScript's `tsc` CLI in `noEmit` mode to run type-checking separately. You can then include this, for example, in your `test` scripts.
+```bash
+# Run in dev mode:
+npm run dev
+
+# Run in production:
+npm run build
+npm start
+```
+
+## Idea:
+
+Server side rendered apps are awesome. They make a sweet spot between monolithic apps and single page apps powered by microservices. But they also add complexity to their creation. Keeping state on the server and the client in sync, routing on the client and the server, loading data before server rendering, etc. are some of the things that make our apps more complex. That is why frameworks such as Next.js exist, to solve most of those problems. However, things such as authentication are left to us. This is an attempt to implement the authentication based on JWT. The thing is that we can't store tokens in localStorage as we would do with SPA.
+
+The idea is to receive token from the server on the client, store it in cookies, and then whenever a page renders on the server, we would be able to access the token from the cookie.
+
+## How it works:
+
+#### The client:
+
+The user sends an auth request from the client. In the response, JWT is received, and stored in browser cookies and redux store. Then the user has access to the token from the client, and can use it to access protected routes.
+
+#### The server:
+
+When the user makes a page request, cookies are also sent along, so the server can read them. To read it, the user is using the `getServerSideProps` lifecycle method, provided by Next.js with a Wrapper from next-redux-wrapper module. It gets an argument - the context object that contains some properties. You can read more about it [here](https://nextjs.org/docs/basic-features/data-fetching#getserversideprops-server-side-rendering). On the `req` server property, we can access `headers` property which contains the cookie with the token. An action creator is dispatched to save the token in the redux store, and the app now has access to the token again.
+
+## Screenshot
+
+![](docs/home.png)
+![](docs/register.png)
+![](docs/login.png)
+![](docs/profile.png)
+
+## Technologies
+
+- Typescript
+- Node
+- Express
+- MongoDB
+- Passport
+- Jsonwebtoken
+- React
+- Nextjs
+- Redux
+- Redux thunk

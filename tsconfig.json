@@ -1,23 +1,22 @@
 {
+  "extends": "./frontend/tsconfig.json",
   "compilerOptions": {
-    "allowJs": true,
-    "alwaysStrict": true,
+    "noEmit": false,
+    "outDir": "./frontend/.next/production-server/",
+    "module": "commonjs",
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "isolatedModules": true,
-    "jsx": "preserve",
-    "lib": ["dom", "es2017"],
-    "module": "esnext",
+    "target": "es6",
+    "noImplicitAny": true,
     "moduleResolution": "node",
-    "noEmit": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "resolveJsonModule": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "target": "esnext"
+    "sourceMap": true,
+    "baseUrl": "backend",
+    "paths": {
+      "*": ["node_modules/*"],
+      "backend/*": ["./*"]
+    }
   },
-  "exclude": ["node_modules"],
-  "include": ["**/*.ts", "**/*.tsx"]
+  "include": [
+    "backend/**/*",
+    "global.d.ts"
+  ]
 }
