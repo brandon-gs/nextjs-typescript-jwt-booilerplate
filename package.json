@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "nodemon backend/index.ts",
-    "build": "next build && tsc --project tsconfig.json",
+    "build": "next build frontend/ && tsc --project tsconfig.json",
     "postinstall": "npm run build",
     "start": "NODE_ENV=production node frontend/.next/production-server/index.js",
     "type-check": "tsc"
