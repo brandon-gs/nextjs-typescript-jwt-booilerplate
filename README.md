@@ -23,7 +23,7 @@ npm install
 This file is necessary to run the application, the file should be like the following:
 
 ```.env
-MONGO_URI=mongodb://localhost/testlogin)
+MONGO_URI=mongodb://localhost/testlogin
 JWT_SECRET=MY_JWT_SECRET_I_MUST_REPLACE_THIS_IN_PRODUCTION
 ```
 
