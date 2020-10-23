@@ -6,14 +6,9 @@ import mongoose, { ConnectionOptions } from "mongoose";
       useUnifiedTopology: true,
       useNewUrlParser: true,
       useCreateIndex: true,
-      authSource: "admin",
-      user: process.env.MONGO_USER,
-      pass: process.env.MONGO_PASSWORD,
     };
-    const db = await mongoose.connect(
-      `mongodb://${process.env.MONGO_HOST}/${process.env.MONGO_DATABASE}`,
-      mongooseOptions
-    );
+
+    const db = await mongoose.connect(process.env.MONGO_URI!, mongooseOptions);
     console.log("> Database is connected to: ", db.connection.name);
   } catch (error) {
     console.error(error);

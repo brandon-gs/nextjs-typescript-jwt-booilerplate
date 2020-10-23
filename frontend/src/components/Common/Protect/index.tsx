@@ -1,6 +1,9 @@
-import { useDispatch, useSelector } from "react-redux";
+// Components
+import { Backdrop, CircularProgress } from "@material-ui/core";
+// Hooks
+import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
-import actions from "../../../store/actions";
+import useStyles from "./style";
 
 type Props = {
   type: "both" | "public" | "private";
@@ -9,22 +12,29 @@ type Props = {
 
 export default function Protect({ type, children }: Props) {
   const { auth } = useSelector((state) => state.authentication);
-  const dispatch = useDispatch();
   const router = useRouter();
-
-  dispatch(actions.showLoader());
-
+  const classes = useStyles();
   if (type === "both") {
-    dispatch(actions.hideLoader());
     return children;
   } else if (!auth && type === "public") {
-    dispatch(actions.hideLoader());
     return children;
   } else if (auth && type === "private") {
-    dispatch(actions.hideLoader());
     return children;
   }
-  const route = type === "private" ? "/login" : "/profile";
-  router.push(route);
-  return null;
+  const route =
+    type === "private" && !auth
+      ? "/login"
+      : type === "public" && auth
+      ? "/profile"
+      : null;
+  if (route) {
+    router.push(route);
+  }
+  return (
+    <div>
+      <Backdrop className={classes.backdrop} open={true}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
+    </div>
+  );
 }

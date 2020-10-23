@@ -60,11 +60,11 @@ const deauthenticate = () => {
   return async (dispatch: any) => {
     removeCookie("token");
     dispatch(actions.showLoader());
-    dispatch({ type: DEAUTHENTICATE });
     const { pathname } = Router;
-    if (pathname !== "/" && process.browser) {
+    if (pathname !== "/") {
       await Router.push("/");
     }
+    dispatch({ type: DEAUTHENTICATE });
     dispatch(actions.hideLoader());
   };
 };

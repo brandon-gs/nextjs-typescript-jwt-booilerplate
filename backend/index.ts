@@ -1,6 +1,7 @@
 import "dotenv/config";
 import next from "next";
 import app from "./app";
+import path from "path";
 import "./database";
 import "./src/services/passport";
 import "./src/interfaces/index";
@@ -18,6 +19,13 @@ const handle = nextApp.getRequestHandler();
   await nextApp.prepare();
 
   app.use(PagesRoutes);
+
+  app.get("/favicon.ico", (_, res) => {
+    const faviconOptions = {
+      root: path.join(__dirname, "../frontend/public/"),
+    };
+    res.status(200).sendFile("favicon.ico", faviconOptions);
+  });
 
   app.all("*", (req, res) => {
     return handle(req, res);
