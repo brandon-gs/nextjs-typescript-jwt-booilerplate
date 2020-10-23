@@ -2,6 +2,10 @@
 
 This project is a demonstration of authentication of an application in Next.js using JWT
 
+## Live demostration:
+
+You can test the project [here](https://next-typescript-auth.herokuapp.com/)
+
 ## Usage:
 
 ### Installation:
