@@ -23,12 +23,8 @@ npm install
 This file is necessary to run the application, the file should be like the following:
 
 ```.env
-MONGO_DATABASE=nextlogin
-MONGO_USER=admin
-MONGO_PASSWORD=admin
-MONGO_HOST=localhost
+MONGO_URI=mongodb://localhost/testlogin)
 JWT_SECRET=MY_JWT_SECRET_I_MUST_REPLACE_THIS_IN_PRODUCTION
-PORT=3000
 ```
 
 You must replace JWT_SECRET variable in production for added security
