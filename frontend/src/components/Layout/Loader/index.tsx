@@ -4,17 +4,13 @@ import { Backdrop, CircularProgress } from "@material-ui/core";
 import useStyles from "./styles";
 import { useSelector } from "react-redux";
 
-type Props = {
-  forceShow: boolean;
-};
-
-export default function Loader({ forceShow = false }: Props) {
+export default function Loader() {
   const { show } = useSelector((state) => state.loader);
   const classes = useStyles();
 
   return (
     <div>
-      <Backdrop className={classes.backdrop} open={show ? show : forceShow}>
+      <Backdrop className={classes.backdrop} open={show}>
         <CircularProgress color="inherit" />
       </Backdrop>
     </div>
